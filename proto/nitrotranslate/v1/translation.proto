@@ -1,0 +1,151 @@
+syntax = "proto3";
+
+// Translation endpoints (cost estimation and order creation) of the Nitro
+// human-translation API.
+package nitrotranslate.v1;
+
+import "buf/validate/validate.proto";
+import "google/api/annotations.proto";
+import "nitrotranslate/v1/common.proto";
+import "nitrotranslate/v1/order.proto";
+
+option go_package = "github.com/alconost/nitrotranslate/proto/gen/nitrotranslate/v1;nitrotranslatev1";
+
+// TranslationService estimates costs and submits content for translation.
+service TranslationService {
+  // POST /calculate — estimate translation cost per target language.
+  rpc Calculate(CalculateRequest) returns (CalculateResponse) {
+    option (google.api.http) = {
+      post: "/v1/calculate"
+      body: "*"
+      response_body: "calculations"
+    };
+  }
+
+  // POST /translate — submit content for translation and create orders.
+  rpc Translate(TranslateRequest) returns (TranslateResponse) {
+    option (google.api.http) = {
+      post: "/v1/translate"
+      body: "*"
+      response_body: "translation"
+    };
+  }
+}
+
+// Per-language-pair cost estimate produced by Calculate.
+message Calculation {
+  string source_language = 1;
+  string target_language = 2;
+  // Billable character volume.
+  int64 volume = 3;
+  // Estimated price in US dollars.
+  double price = 4;
+}
+
+// Comment supplied with a translation request (inbound counterpart of the
+// `Comment` returned on an order).
+message CommentInput {
+  string text = 1;
+  repeated AttachmentInput attachments = 2;
+}
+
+// Attachment supplied with a translation comment on submission (inbound
+// counterpart of the `Attachment` returned on an order).
+message AttachmentInput {
+  // MIME type, e.g. "image/png".
+  string type = 1 [(buf.validate.field).required = true];
+  // Base64-encoded image bytes.
+  string data = 2 [(buf.validate.field).required = true];
+}
+
+message CalculateRequest {
+  string source_language = 1 [
+    (buf.validate.field).required = true,
+    (buf.validate.field).string = {
+      in: [
+        "af", "ar", "az", "be", "bg", "bn", "ca", "cs", "da", "de", "el", "en",
+        "es-ES", "es-MX", "et", "fa", "fi", "fr", "fr-CA", "he", "hi", "hr",
+        "hu", "hy-AM", "id", "is", "it", "ja", "ka", "kk", "ko", "ky", "lt",
+        "lv", "ml-IN", "ms", "my", "nl", "no", "pl", "pt-BR", "pt-PT", "ro",
+        "ru", "sk", "sl", "sr", "sr-CS", "sv-SE", "ta", "tg", "th", "tl", "tr",
+        "te", "uk", "ur-PK", "uz", "vi", "zh-CN", "zh-TW"
+      ]
+    }
+  ];
+  repeated string target_languages = 2 [
+    (buf.validate.field).repeated = {
+      min_items: 1
+      items: {
+        string: {
+          in: [
+            "af", "ar", "az", "be", "bg", "bn", "ca", "cs", "da", "de", "el",
+            "en", "es-ES", "es-MX", "et", "fa", "fi", "fr", "fr-CA", "he", "hi",
+            "hr", "hu", "hy-AM", "id", "is", "it", "ja", "ka", "kk", "ko", "ky",
+            "lt", "lv", "ml-IN", "ms", "my", "nl", "no", "pl", "pt-BR", "pt-PT",
+            "ro", "ru", "sk", "sl", "sr", "sr-CS", "sv-SE", "ta", "tg", "th",
+            "tl", "tr", "te", "uk", "ur-PK", "uz", "vi", "zh-CN", "zh-TW"
+          ]
+        }
+      }
+    }
+  ];
+  Resource resource = 3 [(buf.validate.field).required = true];
+}
+
+message CalculateResponse {
+  repeated Calculation calculations = 1;
+}
+
+message TranslateRequest {
+  string source_language = 1 [
+    (buf.validate.field).required = true,
+    (buf.validate.field).string = {
+      in: [
+        "af", "ar", "az", "be", "bg", "bn", "ca", "cs", "da", "de", "el", "en",
+        "es-ES", "es-MX", "et", "fa", "fi", "fr", "fr-CA", "he", "hi", "hr",
+        "hu", "hy-AM", "id", "is", "it", "ja", "ka", "kk", "ko", "ky", "lt",
+        "lv", "ml-IN", "ms", "my", "nl", "no", "pl", "pt-BR", "pt-PT", "ro",
+        "ru", "sk", "sl", "sr", "sr-CS", "sv-SE", "ta", "tg", "th", "tl", "tr",
+        "te", "uk", "ur-PK", "uz", "vi", "zh-CN", "zh-TW"
+      ]
+    }
+  ];
+  repeated string target_languages = 2 [
+    (buf.validate.field).repeated = {
+      min_items: 1
+      items: {
+        string: {
+          in: [
+            "af", "ar", "az", "be", "bg", "bn", "ca", "cs", "da", "de", "el",
+            "en", "es-ES", "es-MX", "et", "fa", "fi", "fr", "fr-CA", "he", "hi",
+            "hr", "hu", "hy-AM", "id", "is", "it", "ja", "ka", "kk", "ko", "ky",
+            "lt", "lv", "ml-IN", "ms", "my", "nl", "no", "pl", "pt-BR", "pt-PT",
+            "ro", "ru", "sk", "sl", "sr", "sr-CS", "sv-SE", "ta", "tg", "th",
+            "tl", "tr", "te", "uk", "ur-PK", "uz", "vi", "zh-CN", "zh-TW"
+          ]
+        }
+      }
+    }
+  ];
+  Resource resource = 3 [(buf.validate.field).required = true];
+  Context context = 4;
+  CommentInput comment = 5;
+}
+
+// The outcome of a translation submission: the submitted content and the
+// orders created for it.
+message Translation {
+  // The submitted source text.
+  string text = 1;
+  Resource resource = 2;
+  // Billable character volume.
+  int64 volume = 3;
+  // One order per target language, as the lightweight OrderSummary projection
+  // (id, source_language, target_language, price, created_at; status/snippet
+  // are omitted from the JSON here).
+  repeated OrderSummary orders = 4;
+}
+
+message TranslateResponse {
+  Translation translation = 1;
+}

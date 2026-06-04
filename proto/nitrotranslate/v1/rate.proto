@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+// Rates endpoint of the Nitro human-translation API.
+package nitrotranslate.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "github.com/alconost/nitrotranslate/proto/gen/nitrotranslate/v1;nitrotranslatev1";
+
+// RateService exposes current per-language-pair pricing.
+service RateService {
+  // GET /rates — current pricing rates for all supported language pairs.
+  rpc ListRates(ListRatesRequest) returns (ListRatesResponse) {
+    option (google.api.http) = {
+      get: "/v1/rates"
+      response_body: "rates"
+    };
+  }
+}
+
+// Per-language-pair price produced by ListRates.
+message Rate {
+  string source_language = 1;
+  string target_language = 2;
+  // Rate per 1000 characters, in US dollars.
+  double rate = 3;
+}
+
+message ListRatesRequest {}
+
+message ListRatesResponse {
+  repeated Rate rates = 1;
+}

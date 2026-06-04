@@ -3,15 +3,27 @@
 ConnectRPC / gRPC protobuf definitions for the [Nitro](https://developer.nitrotranslate.com/)
 human-translation API.
 
-The schema in [`proto/nitro/v1/nitro.proto`](proto/nitro/v1/nitro.proto) mirrors
+The schema under [`proto/nitrotranslate/v1/`](proto/nitrotranslate/v1/) mirrors
 Nitro's production REST API 1:1:
 
 - **Base URL:** `https://api.nitrotranslate.com/v1`
 - **Auth:** HTTP Basic — API key as the username, blank password.
 
 Each RPC carries a `google.api.http` annotation (with `response_body` where the
-REST endpoint returns a naked array/object) so the service can be served over
+REST endpoint returns a naked array/object) so the services can be served over
 gRPC, gRPC-Web, ConnectRPC, **and** transcoded REST simultaneously.
+
+## Files
+
+The API is split by domain; all files share the `nitrotranslate.v1` package.
+
+| File | Service | RPCs |
+| --- | --- | --- |
+| [`common.proto`](proto/nitrotranslate/v1/common.proto) | — | shared `Resource`, `Context` |
+| [`account.proto`](proto/nitrotranslate/v1/account.proto) | `AccountService` | `GetAccount` |
+| [`order.proto`](proto/nitrotranslate/v1/order.proto) | `OrderService` | `ListOrders`, `GetOrder`, `DeleteOrder` |
+| [`translation.proto`](proto/nitrotranslate/v1/translation.proto) | `TranslationService` | `Calculate`, `Translate` |
+| [`rate.proto`](proto/nitrotranslate/v1/rate.proto) | `RateService` | `ListRates` |
 
 ## Service methods
 
