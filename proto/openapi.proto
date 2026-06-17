@@ -21,6 +21,14 @@ option (gnostic.openapi.v3.document) = {
           value: {}
         }
       ]
+    },
+    {
+      additional_properties: [
+        {
+          name: "BasicAuth"
+          value: {}
+        }
+      ]
     }
   ]
   components: {
@@ -33,6 +41,15 @@ option (gnostic.openapi.v3.document) = {
               type: "http"
               scheme: "bearer"
               bearer_format: "opaque"
+            }
+          }
+        },
+        {
+          name: "BasicAuth"
+          value: {
+            security_scheme: {
+              type: "http"
+              scheme: "basic"
             }
           }
         }
