@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+import "gnostic/openapi/v3/annotations.proto";
+
+option (gnostic.openapi.v3.document) = {
+  info: {
+    title: "NitroTranslate API"
+    description: "Human translation API"
+  }
+  servers: [
+    {
+      url: "https://api.nitrotranslate.com"
+      description: "NitroTranslate"
+    }
+  ]
+  security: [
+    {
+      additional_properties: [
+        {
+          name: "BearerAuth"
+          value: {}
+        }
+      ]
+    }
+  ]
+  components: {
+    security_schemes: {
+      additional_properties: [
+        {
+          name: "BearerAuth"
+          value: {
+            security_scheme: {
+              type: "http"
+              scheme: "bearer"
+              bearer_format: "opaque"
+            }
+          }
+        }
+      ]
+    }
+    schemas: {
+      additional_properties: [
+        {
+          name: "google.protobuf.Timestamp"
+          value: {
+            schema: {
+              type: "string"
+              format: "date-time"
+            }
+          }
+        }
+      ]
+    }
+  }
+};
