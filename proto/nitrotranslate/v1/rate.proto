@@ -1,11 +1,8 @@
 syntax = "proto3";
 
-// Rates endpoint of the Nitro human-translation API.
 package nitrotranslate.v1;
 
 import "google/api/annotations.proto";
-
-option go_package = "github.com/alconost/nitrotranslate/proto/gen/nitrotranslate/v1;nitrotranslatev1";
 
 // RateService exposes current per-language-pair pricing.
 service RateService {

@@ -27,7 +27,6 @@ service TranslationService {
     option (google.api.http) = {
       post: "/v1/translate"
       body: "*"
-      response_body: "translation"
     };
   }
 }
@@ -37,7 +36,7 @@ message Calculation {
   string source_language = 1;
   string target_language = 2;
   // Billable character volume.
-  int64 volume = 3;
+  int32 volume = 3;
   // Estimated price in US dollars.
   double price = 4;
 }
@@ -132,20 +131,13 @@ message TranslateRequest {
   CommentInput comment = 5;
 }
 
-// The outcome of a translation submission: the submitted content and the
-// orders created for it.
-message Translation {
+message TranslateResponse {
   // The submitted source text.
   string text = 1;
+  // The submitted resource.
   Resource resource = 2;
   // Billable character volume.
-  int64 volume = 3;
-  // One order per target language, as the lightweight OrderSummary projection
-  // (id, source_language, target_language, price, created_at; status/snippet
-  // are omitted from the JSON here).
+  int32 volume = 3;
+  // One order per target language.
   repeated OrderSummary orders = 4;
-}
-
-message TranslateResponse {
-  Translation translation = 1;
 }

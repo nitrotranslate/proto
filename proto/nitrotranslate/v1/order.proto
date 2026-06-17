@@ -1,14 +1,11 @@
 syntax = "proto3";
 
-// Order endpoints of the Nitro human-translation API.
 package nitrotranslate.v1;
 
 import "buf/validate/validate.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "nitrotranslate/v1/common.proto";
-
-option go_package = "github.com/alconost/nitrotranslate/proto/gen/nitrotranslate/v1;nitrotranslatev1";
 
 // OrderService exposes listing, retrieval and deletion of orders.
 service OrderService {
@@ -52,7 +49,7 @@ message Attachment {
 
 // A comment on an order.
 message Comment {
-  int64 id = 1;
+  int32 id = 1;
   google.protobuf.Timestamp time = 2;
   // Author role: CUSTOMER or TRANSLATOR.
   string role = 3 [(buf.validate.field).string = {
@@ -65,7 +62,7 @@ message Comment {
 // A full order record, as returned by GetOrder. Lighter listings (ListOrders,
 // Translate) use the OrderSummary projection instead.
 message Order {
-  int64 id = 1;
+  int32 id = 1;
   // Lifecycle status: QUEUE (deletable) or DONE.
   string status = 2 [
     (buf.validate.field).required = true,
@@ -77,7 +74,7 @@ message Order {
   string target_language = 4;
   string source_text = 5;
   string target_text = 6;
-  int64 volume = 7;
+  int32 volume = 7;
   double price = 8;
   Resource resource = 9;
   Context context = 10;
@@ -94,7 +91,7 @@ message Order {
 // Because status is absent on the Translate projection, it is constrained but
 // not required here (it is required on the full Order, which always carries it).
 message OrderSummary {
-  int64 id = 1;
+  int32 id = 1;
   // Lifecycle status: QUEUE or DONE. Set by ListOrders; absent on Translate.
   optional string status = 2 [(buf.validate.field).string = {
     in: ["QUEUE", "DONE"]
@@ -124,7 +121,7 @@ message ListOrdersResponse {
 }
 
 message GetOrderRequest {
-  int64 id = 1 [(buf.validate.field).int64.gt = 0];
+  int32 id = 1 [(buf.validate.field).int32.gt = 0];
 }
 
 message GetOrderResponse {
@@ -132,7 +129,7 @@ message GetOrderResponse {
 }
 
 message DeleteOrderRequest {
-  int64 id = 1 [(buf.validate.field).int64.gt = 0];
+  int32 id = 1 [(buf.validate.field).int32.gt = 0];
 }
 
 message DeleteOrderResponse {}

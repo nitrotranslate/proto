@@ -1,18 +1,8 @@
 syntax = "proto3";
 
-// Shared message types for the Nitro human-translation API
-// (https://developer.nitrotranslate.com/, base URL
-// https://api.nitrotranslate.com/v1, HTTP Basic auth with the API key as the
-// username and a blank password).
-//
-// The wire shapes here match the existing production JSON 1:1, so enum-like
-// fields are modeled as strings constrained with protovalidate `string.in`
-// rather than proto enums (whose JSON would serialize differently).
 package nitrotranslate.v1;
 
 import "buf/validate/validate.proto";
-
-option go_package = "github.com/alconost/nitrotranslate/proto/gen/nitrotranslate/v1;nitrotranslatev1";
 
 // The content to be translated. `data` is interpreted according to its MIME
 // `type` (e.g. text/plain, text/html, application/json).
