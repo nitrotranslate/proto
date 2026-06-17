@@ -5,7 +5,7 @@ import "gnostic/openapi/v3/annotations.proto";
 option (gnostic.openapi.v3.document) = {
   info: {
     title: "NitroTranslate API"
-    description: "Human translation API"
+    description: "Human Translation API"
   }
   servers: [
     {
