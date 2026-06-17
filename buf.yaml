@@ -1,6 +1,7 @@
 version: v2
 modules:
-  - path: proto
+  - name: buf.build/nitrotranslate/nitro
+    path: proto
 deps:
   - buf.build/googleapis/googleapis
   - buf.build/bufbuild/protovalidate
