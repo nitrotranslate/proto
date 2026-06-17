@@ -17,6 +17,14 @@ option (gnostic.openapi.v3.document) = {
     {
       additional_properties: [
         {
+          name: "BasicAuth"
+          value: {}
+        }
+      ]
+    },
+    {
+      additional_properties: [
+        {
           name: "BearerAuth"
           value: {}
         }
@@ -25,7 +33,7 @@ option (gnostic.openapi.v3.document) = {
     {
       additional_properties: [
         {
-          name: "BasicAuth"
+          name: "PaymentAuth"
           value: {}
         }
       ]
@@ -34,6 +42,15 @@ option (gnostic.openapi.v3.document) = {
   components: {
     security_schemes: {
       additional_properties: [
+        {
+          name: "BasicAuth"
+          value: {
+            security_scheme: {
+              type: "http"
+              scheme: "basic"
+            }
+          }
+        },
         {
           name: "BearerAuth"
           value: {
@@ -45,11 +62,12 @@ option (gnostic.openapi.v3.document) = {
           }
         },
         {
-          name: "BasicAuth"
+          name: "PaymentAuth"
           value: {
             security_scheme: {
               type: "http"
-              scheme: "basic"
+              scheme: "payment"
+              description: "MPP payment authorization, sent as `Authorization: Payment <credential>`."
             }
           }
         }
