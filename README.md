@@ -1,6 +1,6 @@
 # proto
 
-ConnectRPC / gRPC protobuf definitions for the [Nitro](https://developer.nitrotranslate.com/)
+ConnectRPC / gRPC protobuf definitions for the [NitroTranslate](https://nitrotranslate.com/)
 human-translation API.
 
 The schema under [`proto/nitrotranslate/v1/`](proto/nitrotranslate/v1/) mirrors
