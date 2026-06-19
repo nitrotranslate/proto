@@ -17,7 +17,7 @@ service AccountService {
 
 // Account balance information.
 message Account {
-  int64 id = 1;
+  int32 id = 1;
   // Whether the account is allowed to go into overdraft.
   bool balance_overdraft_allowed = 2;
   // Funds currently reserved by in-flight orders, in US dollars.
