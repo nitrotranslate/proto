@@ -40,14 +40,14 @@ message Attachment {
   // Display name of the attachment.
   string name = 3;
   // Size in kilobytes.
-  int32 weight = 4;
+  int64 weight = 4;
   // Pixel dimensions, e.g. "481x315".
   string size = 5;
 }
 
 // A comment on an order.
 message Comment {
-  int32 id = 1;
+  int64 id = 1;
   google.protobuf.Timestamp time = 2;
   // Author role: CUSTOMER or TRANSLATOR.
   string role = 3 [(buf.validate.field).string = {
@@ -63,7 +63,7 @@ message Comment {
 // A full order record, as returned by GetOrder. Lighter listings (ListOrders,
 // Translate) use the OrderSummary projection instead.
 message Order {
-  int32 id = 1;
+  int64 id = 1;
   // Lifecycle status: QUEUE (deletable) -> PROGRESS -> DONE. REVISION marks a
   // completed order the customer reopened and is pending revision; once rework
   // resumes it reports as PROGRESS again (DONE -> REVISION -> PROGRESS -> DONE).
@@ -100,7 +100,7 @@ message Order {
 // Because status is absent on the Translate projection, it is constrained but
 // not required here (it is required on the full Order, which always carries it).
 message OrderSummary {
-  int32 id = 1;
+  int64 id = 1;
   // Lifecycle status: QUEUE -> PROGRESS -> DONE. REVISION marks a completed
   // order pending revision; active rework reports as PROGRESS again.
   optional string status = 2 [(buf.validate.field).string = {
@@ -141,7 +141,7 @@ message ListOrdersResponse {
 }
 
 message GetOrderRequest {
-  int32 id = 1 [(buf.validate.field).int32.gt = 0];
+  int64 id = 1 [(buf.validate.field).int64.gt = 0];
 }
 
 message GetOrderResponse {
@@ -149,7 +149,7 @@ message GetOrderResponse {
 }
 
 message DeleteOrderRequest {
-  int32 id = 1 [(buf.validate.field).int32.gt = 0];
+  int64 id = 1 [(buf.validate.field).int64.gt = 0];
 }
 
 message DeleteOrderResponse {}
