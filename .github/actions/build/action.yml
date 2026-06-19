@@ -1,0 +1,21 @@
+name: Build
+description: Build
+
+inputs:
+  buf_token:
+    description: Buf Token
+    required: true
+  github_token:
+    description: GitHub Token
+    default: ${{ github.token }}
+
+runs:
+  using: composite
+  steps:
+    - uses: extractions/setup-just@v4
+    - uses: bufbuild/buf-action@v1
+      with:
+        token: ${{ inputs.buf_token }}
+    - run: just build
+      shell: bash
+

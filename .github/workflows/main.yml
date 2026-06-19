@@ -1,0 +1,36 @@
+name: Main
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+  id-token: write
+  pull-requests: write
+
+jobs:
+  stage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/build
+        with:
+          buf_token: ${{ secrets.BUF_TOKEN }}
+      - if: github.event_name != 'pull_request'
+        uses: google-github-actions/auth@v3
+        with:
+          service_account: ${{ vars.SERVICE_ACCOUNT }}
+          workload_identity_provider: ${{ vars.WORKLOAD_IDENTITY_PROVIDER }}
+      - if: github.event_name != 'pull_request'
+        uses: ./.github/actions/publish
+        with:
+          image: ${{ vars.IMAGE }}
+      - if: github.event_name != 'pull_request'
+        uses: ./.github/actions/deploy
+        with:
+          service: gateway-stage
+          image: ${{ vars.IMAGE }}
+          tag: ${{ github.sha }}
