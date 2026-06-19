@@ -115,9 +115,11 @@ message OrderSummary {
   string target_language = 4;
   // Short preview of the source text. ListOrders only.
   string snippet = 5;
+  // Billable character volume.
+  int32 volume = 6;
   // Order price in US dollars. Always returned.
-  double price = 6;
-  google.protobuf.Timestamp created_at = 7;
+  double price = 7;
+  google.protobuf.Timestamp created_at = 8;
 }
 
 message ListOrdersRequest {
