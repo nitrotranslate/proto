@@ -34,29 +34,6 @@ jobs:
           version: ${{ github.event.release.tag_name }}
       - uses: ./.github/actions/deploy
         with:
-          service: gateway-sandbox
+          service: gateway
           image: ${{ vars.IMAGE }}
           tag: ${{ github.event.release.tag_name }}
-
-  pages:
-    needs: release
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read   # gh release download
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
-    steps:
-      - run: gh release download "$TAG" --pattern openapi.yaml
-        env:
-          GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.event.release.tag_name }}
-      - uses: actions/configure-pages@v6
-      - uses: actions/upload-pages-artifact@v5
-        with:
-          path: .
-      - uses: actions/deploy-pages@v5
-        id: deploy
-        
