@@ -64,16 +64,16 @@ message Comment {
 // Translate) use the OrderSummary projection instead.
 message Order {
   int32 id = 1;
-  // Lifecycle status: DRAFT, QUEUE (deletable), PROGRESS, REVISION or DONE.
+  // Lifecycle status: QUEUE (deletable) -> PROGRESS -> DONE. REVISION is
+  // re-entered from DONE when the customer reopens a completed order.
   string status = 2 [
     (buf.validate.field).required = true,
     (buf.validate.field).string = {
       in: [
-        "DRAFT",
         "QUEUE",
         "PROGRESS",
-        "REVISION",
-        "DONE"
+        "DONE",
+        "REVISION"
       ]
     }
   ];
@@ -100,15 +100,14 @@ message Order {
 // not required here (it is required on the full Order, which always carries it).
 message OrderSummary {
   int32 id = 1;
-  // Lifecycle status: DRAFT, QUEUE, PROGRESS, REVISION or DONE. Set by
-  // ListOrders; absent on Translate.
+  // Lifecycle status: QUEUE -> PROGRESS -> DONE, with REVISION re-entered from
+  // DONE. Set by ListOrders; absent on Translate.
   optional string status = 2 [(buf.validate.field).string = {
     in: [
-      "DRAFT",
       "QUEUE",
       "PROGRESS",
-      "REVISION",
-      "DONE"
+      "DONE",
+      "REVISION"
     ]
   }];
   string source_language = 3;
