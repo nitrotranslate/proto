@@ -9,6 +9,8 @@ deps:
 lint:
   use:
     - STANDARD
+  ignore:
+    - proto/openapi.proto
 breaking:
   ignore_unstable_packages: true
   use:

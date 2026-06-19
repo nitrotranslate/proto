@@ -9,8 +9,6 @@ import "google/api/annotations.proto";
 import "nitrotranslate/v1/common.proto";
 import "nitrotranslate/v1/order.proto";
 
-option go_package = "github.com/alconost/nitrotranslate/proto/gen/nitrotranslate/v1;nitrotranslatev1";
-
 // TranslationService estimates costs and submits content for translation.
 service TranslationService {
   // POST /calculate — estimate translation cost per target language.
@@ -62,32 +60,140 @@ message CalculateRequest {
     (buf.validate.field).required = true,
     (buf.validate.field).string = {
       in: [
-        "af", "ar", "az", "be", "bg", "bn", "ca", "cs", "da", "de", "el", "en",
-        "es-ES", "es-MX", "et", "fa", "fi", "fr", "fr-CA", "he", "hi", "hr",
-        "hu", "hy-AM", "id", "is", "it", "ja", "ka", "kk", "ko", "ky", "lt",
-        "lv", "ml-IN", "ms", "my", "nl", "no", "pl", "pt-BR", "pt-PT", "ro",
-        "ru", "sk", "sl", "sr", "sr-CS", "sv-SE", "ta", "tg", "th", "tl", "tr",
-        "te", "uk", "ur-PK", "uz", "vi", "zh-CN", "zh-TW"
+        "af",
+        "ar",
+        "az",
+        "be",
+        "bg",
+        "bn",
+        "ca",
+        "cs",
+        "da",
+        "de",
+        "el",
+        "en",
+        "es-ES",
+        "es-MX",
+        "et",
+        "fa",
+        "fi",
+        "fr",
+        "fr-CA",
+        "he",
+        "hi",
+        "hr",
+        "hu",
+        "hy-AM",
+        "id",
+        "is",
+        "it",
+        "ja",
+        "ka",
+        "kk",
+        "ko",
+        "ky",
+        "lt",
+        "lv",
+        "ml-IN",
+        "ms",
+        "my",
+        "nl",
+        "no",
+        "pl",
+        "pt-BR",
+        "pt-PT",
+        "ro",
+        "ru",
+        "sk",
+        "sl",
+        "sr",
+        "sr-CS",
+        "sv-SE",
+        "ta",
+        "tg",
+        "th",
+        "tl",
+        "tr",
+        "te",
+        "uk",
+        "ur-PK",
+        "uz",
+        "vi",
+        "zh-CN",
+        "zh-TW"
       ]
     }
   ];
-  repeated string target_languages = 2 [
-    (buf.validate.field).repeated = {
-      min_items: 1
-      items: {
-        string: {
-          in: [
-            "af", "ar", "az", "be", "bg", "bn", "ca", "cs", "da", "de", "el",
-            "en", "es-ES", "es-MX", "et", "fa", "fi", "fr", "fr-CA", "he", "hi",
-            "hr", "hu", "hy-AM", "id", "is", "it", "ja", "ka", "kk", "ko", "ky",
-            "lt", "lv", "ml-IN", "ms", "my", "nl", "no", "pl", "pt-BR", "pt-PT",
-            "ro", "ru", "sk", "sl", "sr", "sr-CS", "sv-SE", "ta", "tg", "th",
-            "tl", "tr", "te", "uk", "ur-PK", "uz", "vi", "zh-CN", "zh-TW"
-          ]
-        }
+  repeated string target_languages = 2 [(buf.validate.field).repeated = {
+    min_items: 1
+    items: {
+      string: {
+        in: [
+          "af",
+          "ar",
+          "az",
+          "be",
+          "bg",
+          "bn",
+          "ca",
+          "cs",
+          "da",
+          "de",
+          "el",
+          "en",
+          "es-ES",
+          "es-MX",
+          "et",
+          "fa",
+          "fi",
+          "fr",
+          "fr-CA",
+          "he",
+          "hi",
+          "hr",
+          "hu",
+          "hy-AM",
+          "id",
+          "is",
+          "it",
+          "ja",
+          "ka",
+          "kk",
+          "ko",
+          "ky",
+          "lt",
+          "lv",
+          "ml-IN",
+          "ms",
+          "my",
+          "nl",
+          "no",
+          "pl",
+          "pt-BR",
+          "pt-PT",
+          "ro",
+          "ru",
+          "sk",
+          "sl",
+          "sr",
+          "sr-CS",
+          "sv-SE",
+          "ta",
+          "tg",
+          "th",
+          "tl",
+          "tr",
+          "te",
+          "uk",
+          "ur-PK",
+          "uz",
+          "vi",
+          "zh-CN",
+          "zh-TW"
+        ]
       }
     }
-  ];
+  }];
   Resource resource = 3 [(buf.validate.field).required = true];
 }
 
@@ -100,32 +206,140 @@ message TranslateRequest {
     (buf.validate.field).required = true,
     (buf.validate.field).string = {
       in: [
-        "af", "ar", "az", "be", "bg", "bn", "ca", "cs", "da", "de", "el", "en",
-        "es-ES", "es-MX", "et", "fa", "fi", "fr", "fr-CA", "he", "hi", "hr",
-        "hu", "hy-AM", "id", "is", "it", "ja", "ka", "kk", "ko", "ky", "lt",
-        "lv", "ml-IN", "ms", "my", "nl", "no", "pl", "pt-BR", "pt-PT", "ro",
-        "ru", "sk", "sl", "sr", "sr-CS", "sv-SE", "ta", "tg", "th", "tl", "tr",
-        "te", "uk", "ur-PK", "uz", "vi", "zh-CN", "zh-TW"
+        "af",
+        "ar",
+        "az",
+        "be",
+        "bg",
+        "bn",
+        "ca",
+        "cs",
+        "da",
+        "de",
+        "el",
+        "en",
+        "es-ES",
+        "es-MX",
+        "et",
+        "fa",
+        "fi",
+        "fr",
+        "fr-CA",
+        "he",
+        "hi",
+        "hr",
+        "hu",
+        "hy-AM",
+        "id",
+        "is",
+        "it",
+        "ja",
+        "ka",
+        "kk",
+        "ko",
+        "ky",
+        "lt",
+        "lv",
+        "ml-IN",
+        "ms",
+        "my",
+        "nl",
+        "no",
+        "pl",
+        "pt-BR",
+        "pt-PT",
+        "ro",
+        "ru",
+        "sk",
+        "sl",
+        "sr",
+        "sr-CS",
+        "sv-SE",
+        "ta",
+        "tg",
+        "th",
+        "tl",
+        "tr",
+        "te",
+        "uk",
+        "ur-PK",
+        "uz",
+        "vi",
+        "zh-CN",
+        "zh-TW"
       ]
     }
   ];
-  repeated string target_languages = 2 [
-    (buf.validate.field).repeated = {
-      min_items: 1
-      items: {
-        string: {
-          in: [
-            "af", "ar", "az", "be", "bg", "bn", "ca", "cs", "da", "de", "el",
-            "en", "es-ES", "es-MX", "et", "fa", "fi", "fr", "fr-CA", "he", "hi",
-            "hr", "hu", "hy-AM", "id", "is", "it", "ja", "ka", "kk", "ko", "ky",
-            "lt", "lv", "ml-IN", "ms", "my", "nl", "no", "pl", "pt-BR", "pt-PT",
-            "ro", "ru", "sk", "sl", "sr", "sr-CS", "sv-SE", "ta", "tg", "th",
-            "tl", "tr", "te", "uk", "ur-PK", "uz", "vi", "zh-CN", "zh-TW"
-          ]
-        }
+  repeated string target_languages = 2 [(buf.validate.field).repeated = {
+    min_items: 1
+    items: {
+      string: {
+        in: [
+          "af",
+          "ar",
+          "az",
+          "be",
+          "bg",
+          "bn",
+          "ca",
+          "cs",
+          "da",
+          "de",
+          "el",
+          "en",
+          "es-ES",
+          "es-MX",
+          "et",
+          "fa",
+          "fi",
+          "fr",
+          "fr-CA",
+          "he",
+          "hi",
+          "hr",
+          "hu",
+          "hy-AM",
+          "id",
+          "is",
+          "it",
+          "ja",
+          "ka",
+          "kk",
+          "ko",
+          "ky",
+          "lt",
+          "lv",
+          "ml-IN",
+          "ms",
+          "my",
+          "nl",
+          "no",
+          "pl",
+          "pt-BR",
+          "pt-PT",
+          "ro",
+          "ru",
+          "sk",
+          "sl",
+          "sr",
+          "sr-CS",
+          "sv-SE",
+          "ta",
+          "tg",
+          "th",
+          "tl",
+          "tr",
+          "te",
+          "uk",
+          "ur-PK",
+          "uz",
+          "vi",
+          "zh-CN",
+          "zh-TW"
+        ]
       }
     }
-  ];
+  }];
   Resource resource = 3 [(buf.validate.field).required = true];
   Context context = 4;
   CommentInput comment = 5;

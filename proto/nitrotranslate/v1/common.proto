@@ -19,7 +19,11 @@ message Resource {
 message Context {
   // Tone of voice: FORMAL, INFORMAL, or GUESS (let the translator decide).
   optional string tone = 1 [(buf.validate.field).string = {
-    in: ["FORMAL", "INFORMAL", "GUESS"]
+    in: [
+      "FORMAL",
+      "INFORMAL",
+      "GUESS"
+    ]
   }];
   // Maximum number of characters allowed in the translation.
   optional int32 limit = 2 [(buf.validate.field).int32.gte = 0];

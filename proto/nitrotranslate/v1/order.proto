@@ -27,9 +27,7 @@ service OrderService {
 
   // DELETE /orders/<ID> — remove an order (only while in QUEUE status).
   rpc DeleteOrder(DeleteOrderRequest) returns (DeleteOrderResponse) {
-    option (google.api.http) = {
-      delete: "/v1/orders/{id}"
-    };
+    option (google.api.http) = {delete: "/v1/orders/{id}"};
   }
 }
 
@@ -53,7 +51,10 @@ message Comment {
   google.protobuf.Timestamp time = 2;
   // Author role: CUSTOMER or TRANSLATOR.
   string role = 3 [(buf.validate.field).string = {
-    in: ["CUSTOMER", "TRANSLATOR"]
+    in: [
+      "CUSTOMER",
+      "TRANSLATOR"
+    ]
   }];
   string text = 4;
   repeated Attachment attachments = 5;
@@ -67,7 +68,10 @@ message Order {
   string status = 2 [
     (buf.validate.field).required = true,
     (buf.validate.field).string = {
-      in: ["QUEUE", "DONE"]
+      in: [
+        "QUEUE",
+        "DONE"
+      ]
     }
   ];
   string source_language = 3;
@@ -95,7 +99,10 @@ message OrderSummary {
   int32 id = 1;
   // Lifecycle status: QUEUE or DONE. Set by ListOrders; absent on Translate.
   optional string status = 2 [(buf.validate.field).string = {
-    in: ["QUEUE", "DONE"]
+    in: [
+      "QUEUE",
+      "DONE"
+    ]
   }];
   string source_language = 3;
   string target_language = 4;
@@ -109,7 +116,10 @@ message OrderSummary {
 message ListOrdersRequest {
   // Sort by creation time: "asc" or "desc" (default).
   optional string sort = 1 [(buf.validate.field).string = {
-    in: ["asc", "desc"]
+    in: [
+      "asc",
+      "desc"
+    ]
   }];
   // Zero-based page index. Defaults to 0.
   optional int32 page = 2 [(buf.validate.field).int32.gte = 0];
