@@ -1,0 +1,26 @@
+name: Publish
+description: Publish
+
+inputs:
+  image:
+    description: Docker Image
+    required: true
+  version:
+    description: Version
+
+runs:
+  using: composite
+  steps:
+    - run: gcloud auth configure-docker
+      shell: bash
+    - uses: docker/setup-buildx-action@v4
+    - uses: docker/build-push-action@v7
+      with:
+        context: .
+        push: true
+        tags: |
+          ${{ inputs.image }}:${{ github.sha }}
+          ${{ inputs.image }}:${{ inputs.version || 'latest' }}
+          ${{ inputs.version && format('{0}:stable', inputs.image) || '' }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max

@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package nitrotranslate.v1;
+
+import "google/api/annotations.proto";
+
+// AccountService exposes account balance information.
+service AccountService {
+  // GET /account — retrieve account details (balance and reserved funds).
+  rpc GetAccount(GetAccountRequest) returns (GetAccountResponse) {
+    option (google.api.http) = {
+      get: "/v1/account"
+      response_body: "account"
+    };
+  }
+}
+
+// Account balance information.
+message Account {
+  int64 id = 1;
+  // Whether the account is allowed to go into overdraft.
+  bool balance_overdraft_allowed = 2;
+  // Funds currently reserved by in-flight orders, in US dollars.
+  double reserved = 3;
+  // Available balance, in US dollars.
+  double balance = 4;
+}
+
+message GetAccountRequest {}
+
+message GetAccountResponse {
+  Account account = 1;
+}

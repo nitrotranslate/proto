@@ -1,0 +1,22 @@
+name: Deploy
+description: Deploy
+
+inputs:
+  service:
+    description: Service
+    required: true
+  image:
+    description: Image repo
+    required: true
+  tag:
+    description: Image tag
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: google-github-actions/deploy-cloudrun@v3
+      with:
+        service: ${{ inputs.service }}
+        image: ${{ inputs.image }}:${{ inputs.tag }}
+        region: us-central1

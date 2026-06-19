@@ -1,0 +1,17 @@
+version: v2
+modules:
+  - name: buf.build/nitrotranslate/nitro
+    path: proto
+deps:
+  - buf.build/googleapis/googleapis
+  - buf.build/bufbuild/protovalidate
+  - buf.build/gnostic/gnostic
+lint:
+  use:
+    - STANDARD
+  ignore:
+    - proto/openapi.proto
+breaking:
+  ignore_unstable_packages: true
+  use:
+    - PACKAGE
