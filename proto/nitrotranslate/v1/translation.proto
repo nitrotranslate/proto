@@ -1,7 +1,5 @@
 syntax = "proto3";
 
-// Translation endpoints (cost estimation and order creation) of the Nitro
-// human-translation API.
 package nitrotranslate.v1;
 
 import "buf/validate/validate.proto";
