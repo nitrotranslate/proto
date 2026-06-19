@@ -64,8 +64,9 @@ message Comment {
 // Translate) use the OrderSummary projection instead.
 message Order {
   int32 id = 1;
-  // Lifecycle status: QUEUE (deletable) -> PROGRESS -> DONE. REVISION is
-  // re-entered from DONE when the customer reopens a completed order.
+  // Lifecycle status: QUEUE (deletable) -> PROGRESS -> DONE. REVISION marks a
+  // completed order the customer reopened and is pending revision; once rework
+  // resumes it reports as PROGRESS again (DONE -> REVISION -> PROGRESS -> DONE).
   string status = 2 [
     (buf.validate.field).required = true,
     (buf.validate.field).string = {
@@ -100,8 +101,8 @@ message Order {
 // not required here (it is required on the full Order, which always carries it).
 message OrderSummary {
   int32 id = 1;
-  // Lifecycle status: QUEUE -> PROGRESS -> DONE, with REVISION re-entered from
-  // DONE. Set by ListOrders; absent on Translate.
+  // Lifecycle status: QUEUE -> PROGRESS -> DONE. REVISION marks a completed
+  // order pending revision; active rework reports as PROGRESS again.
   optional string status = 2 [(buf.validate.field).string = {
     in: [
       "QUEUE",
