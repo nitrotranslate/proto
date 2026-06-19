@@ -9,7 +9,7 @@ import "nitrotranslate/v1/order.proto";
 
 // TranslationService estimates costs and submits content for translation.
 service TranslationService {
-  // POST /calculate — estimate translation cost per target language.
+  // Estimate translation cost per target language.
   rpc Calculate(CalculateRequest) returns (CalculateResponse) {
     option (google.api.http) = {
       post: "/v1/calculate"
@@ -18,7 +18,7 @@ service TranslationService {
     };
   }
 
-  // POST /translate — submit content for translation and create orders.
+  // Submit content for translation and create orders.
   rpc Translate(TranslateRequest) returns (TranslateResponse) {
     option (google.api.http) = {
       post: "/v1/translate"

@@ -6,7 +6,7 @@ import "google/api/annotations.proto";
 
 // RateService exposes current per-language-pair pricing.
 service RateService {
-  // GET /rates — current pricing rates for all supported language pairs.
+  // Current pricing rates for all supported language pairs.
   rpc ListRates(ListRatesRequest) returns (ListRatesResponse) {
     option (google.api.http) = {
       get: "/v1/rates"

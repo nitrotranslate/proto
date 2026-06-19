@@ -9,7 +9,7 @@ import "nitrotranslate/v1/common.proto";
 
 // OrderService exposes listing, retrieval and deletion of orders.
 service OrderService {
-  // GET /orders — list orders, newest first by default, with pagination.
+  // List orders, newest first by default, with pagination.
   rpc ListOrders(ListOrdersRequest) returns (ListOrdersResponse) {
     option (google.api.http) = {
       get: "/v1/orders"
@@ -17,7 +17,7 @@ service OrderService {
     };
   }
 
-  // GET /orders/<ID> — fetch a single order with its full details.
+  // Fetch a single order with its full details.
   rpc GetOrder(GetOrderRequest) returns (GetOrderResponse) {
     option (google.api.http) = {
       get: "/v1/orders/{id}"
@@ -25,7 +25,7 @@ service OrderService {
     };
   }
 
-  // DELETE /orders/<ID> — remove an order (only while in QUEUE status).
+  // Remove an order (only while in QUEUE status).
   rpc DeleteOrder(DeleteOrderRequest) returns (DeleteOrderResponse) {
     option (google.api.http) = {delete: "/v1/orders/{id}"};
   }
