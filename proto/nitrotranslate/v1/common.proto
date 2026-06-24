@@ -7,7 +7,7 @@ import "buf/validate/validate.proto";
 // The content to be translated. `data` is interpreted according to its MIME
 // `type` (e.g. text/plain, text/html, application/json).
 message Resource {
-  // MIME type of the resource, e.g. "text/html".
+  // Resource MIME type (at the moment text/plain, text/html, text/x-objcstrings, application/json only supported)
   string type = 1 [(buf.validate.field).required = true];
   // The resource payload.
   string data = 2 [(buf.validate.field).required = true];
